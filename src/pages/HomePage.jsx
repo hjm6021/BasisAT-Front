@@ -1,5 +1,11 @@
+import HeaderContainer from '../containers/common/HeaderContainer';
+
 const HomePage = () => {
-    return <div>HomePage</div>;
+    return (
+        <div>
+            <HeaderContainer />
+        </div>
+    );
 };
 
 export default HomePage;

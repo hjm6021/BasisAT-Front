@@ -33,14 +33,13 @@ const ErrorMessage = styled.div`
     margin-top: 1rem;
 `;
 
-const AuthForm = () => {
-    const error = null;
+const AuthForm = ({ error, username, password, onChange, onSubmit }) => {
     return (
         <AuthFormBlock>
             <h3>Login</h3>
-            <form>
-                <StyledInput name="username" placeholder="ID" />
-                <StyledInput name="password" type="password" placeholder="Password" />
+            <form onSubmit={onSubmit}>
+                <StyledInput name="username" value={username} placeholder="Username" onChange={onChange} />
+                <StyledInput name="password" value={password} type="Password" placeholder="Password" onChange={onChange} />
                 {error && <ErrorMessage>{error}</ErrorMessage>}
                 <Button cyan={true} fullWidth={true} style={{ marginTop: '1rem' }}>
                     LOGIN

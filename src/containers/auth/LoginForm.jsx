@@ -3,15 +3,17 @@ import { useSelector, useDispatch } from 'react-redux';
 import { changeInput, initializeForm, login } from '../../modules/auth';
 import { useNavigate } from 'react-router-dom';
 import { useState, useEffect } from 'react';
+import { check } from '../../modules/user';
 
 const LoginForm = () => {
     const [error, setError] = useState(null);
 
-    const { username, password, auth, authError } = useSelector(({ auth }) => ({
+    const { username, password, auth, authError, user } = useSelector(({ auth, user }) => ({
         username: auth.username,
         password: auth.password,
         auth: auth.auth,
         authError: auth.authError,
+        user: user.user,
     }));
 
     const dispatch = useDispatch();
@@ -24,7 +26,12 @@ const LoginForm = () => {
 
     const onSubmit = (e) => {
         e.preventDefault();
+        if ([username, password].includes('')) {
+            setError('Insert Username or Password');
+            return;
+        }
         dispatch(login({ username, password }));
+        dispatch(initializeForm());
     };
 
     useEffect(() => {
@@ -38,9 +45,7 @@ const LoginForm = () => {
                 return;
             }
 
-            if (authError.response.status === 400) {
-                setError('Insert Username or Password');
-            } else if (authError.response.status === 401) {
+            if (authError.response.status === 401) {
                 setError('Authentication Failed');
             } else if (authError.response.status === 500) {
                 setError('Login Failed');
@@ -49,15 +54,20 @@ const LoginForm = () => {
         }
 
         if (auth) {
+            dispatch(check());
+        }
+    }, [auth, authError, dispatch]);
+
+    useEffect(() => {
+        if (user) {
             navigate('/');
             try {
-                console.log(JSON.stringify(auth));
-                sessionStorage.setItem('user', JSON.stringify(auth));
+                sessionStorage.setItem('user', JSON.stringify(user));
             } catch (e) {
                 console.log('sessionStorage is not working');
             }
         }
-    }, [auth, authError, dispatch, navigate]);
+    }, [user, navigate]);
 
     return (
         <div>

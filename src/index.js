@@ -8,18 +8,18 @@ import { composeWithDevTools } from 'redux-devtools-extension';
 import rootReducer, { rootSaga } from './modules';
 import { Provider } from 'react-redux';
 import createSagaMiddleware from 'redux-saga';
-import { tmpSetUser } from './modules/user';
+import { tmpSetUser, check } from './modules/user';
 
 const sagaMiddleware = createSagaMiddleware();
 
 const store = createStore(rootReducer, composeWithDevTools(applyMiddleware(sagaMiddleware)));
 
-function loadUser() {
+async function loadUser() {
     try {
         const user = sessionStorage.getItem('user');
         store.dispatch(tmpSetUser(JSON.parse(user)));
-        // store.dispatch(check());
-        console.log(user);
+        store.dispatch(check());
+
         if (!user) {
             return;
         }

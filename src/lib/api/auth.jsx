@@ -6,9 +6,9 @@ export const login = ({ username, password }) => {
 };
 
 export const logout = () => {
-    return client.post('/auth/logout');
+    return client.post('/auth/logout', { withCredentials: true });
 };
 
 export const check = () => {
-    return client.get('/auth/check');
+    return client.get('/auth/check', { withCredentials: true });
 };

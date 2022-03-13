@@ -8,11 +8,12 @@ import { check } from '../../modules/user';
 const LoginForm = () => {
     const [error, setError] = useState(null);
 
-    const { username, password, auth, authError } = useSelector(({ auth }) => ({
+    const { username, password, auth, authError, user } = useSelector(({ auth, user }) => ({
         username: auth.username,
         password: auth.password,
         auth: auth.auth,
         authError: auth.authError,
+        user: user.user,
     }));
 
     const dispatch = useDispatch();
@@ -53,9 +54,14 @@ const LoginForm = () => {
 
         if (auth) {
             dispatch(check());
-            navigate('/home');
         }
     }, [auth, authError, dispatch, navigate]);
+
+    useEffect(() => {
+        if (user) {
+            navigate('/home', { replace: true });
+        }
+    }, [user, navigate]);
 
     return (
         <div>

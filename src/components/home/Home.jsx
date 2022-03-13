@@ -22,13 +22,13 @@ const ErrorMessage = styled.div`
     font-weight: 500;
 `;
 
-const Home = ({ user, homeInfo, homeInfoError, onClickEditButton }) => {
+const Home = ({ user, homeInfo, homeInfoError }) => {
     return (
         <HomeInfoBlock>
             {homeInfoError && <ErrorMessage>{homeInfoError.message}</ErrorMessage>}
             <ButtonBlock>
                 {user && user.isAdmin ? (
-                    <Button cyan onClick={onClickEditButton}>
+                    <Button cyan to="/home/edit">
                         Edit
                     </Button>
                 ) : null}

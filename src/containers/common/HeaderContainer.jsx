@@ -4,9 +4,10 @@ import { logout } from '../../modules/user';
 import { removeCookies } from '../../lib/cookie';
 import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { initializeAuth } from '../../modules/auth';
 
 const HeaderContainer = () => {
-    const { user } = useSelector(({ user }) => ({ user: user.user }));
+    const { user, auth } = useSelector(({ user, auth }) => ({ user: user.user, auth: auth.auth }));
     const dispatch = useDispatch();
     const navigate = useNavigate();
 
@@ -14,16 +15,12 @@ const HeaderContainer = () => {
         if (!user) {
             navigate('/login');
         }
-    }, [user, navigate]);
+    }, [user, auth, navigate]);
 
     const onLogout = () => {
         dispatch(logout());
-        try {
-            removeCookies('access-token');
-            sessionStorage.removeItem('user');
-        } catch (e) {
-            console.log(e);
-        }
+        dispatch(initializeAuth());
+        removeCookies('access-token');
     };
 
     return <div>{!user ? null : <Header user={user} onLogout={onLogout} />}</div>;

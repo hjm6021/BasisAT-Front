@@ -41,8 +41,16 @@ const Header = ({ user, onLogout }) => {
                     <Link to="/" className="logo">
                         BasisAT
                     </Link>
+                    <Link to="/tools" className="logo">
+                        TOOLS
+                    </Link>
+                    <Link to="/settings" className="logo">
+                        SETTINGS
+                    </Link>
                     <div className="right">
-                        <UserInfo>{user.username}</UserInfo>
+                        <UserInfo>
+                            {user.username} ({user.isAdmin ? 'ADMIN' : 'USER'})
+                        </UserInfo>
                         <Button onClick={onLogout}>Logout</Button>
                     </div>
                 </Wrapper>

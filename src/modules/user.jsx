@@ -26,12 +26,7 @@ function checkFailureSaga() {
 }
 
 function* logoutSaga() {
-    try {
-        yield call(authApi.logout);
-        sessionStorage.removeItem('user');
-    } catch (e) {
-        console.log(e);
-    }
+    yield call(authApi.logout);
 }
 
 export function* userSaga() {

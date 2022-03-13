@@ -8,12 +8,11 @@ import { check } from '../../modules/user';
 const LoginForm = () => {
     const [error, setError] = useState(null);
 
-    const { username, password, auth, authError, user } = useSelector(({ auth, user }) => ({
+    const { username, password, auth, authError } = useSelector(({ auth }) => ({
         username: auth.username,
         password: auth.password,
         auth: auth.auth,
         authError: auth.authError,
-        user: user.user,
     }));
 
     const dispatch = useDispatch();
@@ -31,7 +30,6 @@ const LoginForm = () => {
             return;
         }
         dispatch(login({ username, password }));
-        dispatch(initializeForm());
     };
 
     useEffect(() => {
@@ -55,19 +53,9 @@ const LoginForm = () => {
 
         if (auth) {
             dispatch(check());
-        }
-    }, [auth, authError, dispatch]);
-
-    useEffect(() => {
-        if (user) {
             navigate('/');
-            try {
-                sessionStorage.setItem('user', JSON.stringify(user));
-            } catch (e) {
-                console.log('sessionStorage is not working');
-            }
         }
-    }, [user, navigate]);
+    }, [auth, authError, navigate, dispatch]);
 
     return (
         <div>

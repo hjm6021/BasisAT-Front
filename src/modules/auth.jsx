@@ -13,10 +13,12 @@ const initialState = {
 
 const CHANGE_INPUT = 'auth/CHANGE_INPUT';
 const INITIALIZE_FORM = 'auth/INITIALIZE_FORM';
+const INITIALIZE_AUTH = 'auth/INITIALIZE_AUTH';
 const [LOGIN, LOGIN_SUCCESS, LOGIN_FAILURE] = createRequestActionTypes('auth/LOGIN');
 
 export const changeInput = createAction(CHANGE_INPUT, ({ key, value }) => ({ key: key, value: value }));
 export const initializeForm = createAction(INITIALIZE_FORM);
+export const initializeAuth = createAction(INITIALIZE_AUTH);
 export const login = createAction(LOGIN, ({ username, password }) => ({ username: username, password: password }));
 
 export function* authSaga() {
@@ -34,6 +36,12 @@ const auth = handleActions(
             return produce(state, (draft) => {
                 draft['username'] = '';
                 draft['password'] = '';
+            });
+        },
+        [INITIALIZE_AUTH]: (state) => {
+            return produce(state, (draft) => {
+                draft.auth = null;
+                draft.authError = null;
             });
         },
         [LOGIN_SUCCESS]: (state, { payload: auth }) => {

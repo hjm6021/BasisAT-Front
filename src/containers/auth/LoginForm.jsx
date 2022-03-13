@@ -53,9 +53,9 @@ const LoginForm = () => {
 
         if (auth) {
             dispatch(check());
-            navigate('/');
+            navigate('/home');
         }
-    }, [auth, authError, navigate, dispatch]);
+    }, [auth, authError, dispatch, navigate]);
 
     return (
         <div>

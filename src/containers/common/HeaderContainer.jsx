@@ -1,25 +1,26 @@
 import { useSelector, useDispatch } from 'react-redux';
 import Header from '../../components/common/Header';
-import { logout } from '../../modules/user';
+import { initializeUser, logout } from '../../modules/user';
 import { removeCookies } from '../../lib/cookie';
 import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { initializeAuth } from '../../modules/auth';
 
 const HeaderContainer = () => {
-    const { user, auth } = useSelector(({ user, auth }) => ({ user: user.user, auth: auth.auth }));
+    const { user, checkError } = useSelector(({ user }) => ({ user: user.user, checkError: user.checkError }));
     const dispatch = useDispatch();
     const navigate = useNavigate();
 
     useEffect(() => {
-        if (!user) {
+        if (!user || checkError) {
             navigate('/login');
         }
-    }, [user, auth, navigate]);
+    }, [user, checkError, navigate]);
 
     const onLogout = () => {
         dispatch(logout());
         dispatch(initializeAuth());
+        dispatch(initializeUser());
         removeCookies('access-token');
     };
 

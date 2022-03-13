@@ -9,11 +9,11 @@ const initialState = {
     checkError: null,
 };
 
-const TMP_SET_USER = 'user/TMP_SET_USER';
+const INITIALIZE_USER = 'auth/INITIALIZE_AUTH';
 const [CHECK, CHECK_SUCCESS, CHECK_FAILURE] = createRequestActionTypes('user/CHECK');
 const LOGOUT = 'user/LOGOUT';
 
-export const tmpSetUser = createAction(TMP_SET_USER, (user) => user);
+export const initializeUser = createAction(INITIALIZE_USER);
 export const check = createAction(CHECK);
 export const logout = createAction(LOGOUT);
 
@@ -37,9 +37,10 @@ export function* userSaga() {
 
 const user = handleActions(
     {
-        [TMP_SET_USER]: (state, { payload: user }) => {
+        [INITIALIZE_USER]: (state) => {
             return produce(state, (draft) => {
-                draft.user = user;
+                draft.user = null;
+                draft.checkError = null;
             });
         },
         [CHECK_SUCCESS]: (state, { payload: user }) => {

@@ -1,11 +1,11 @@
-import HomeEdit from '../components/home/HomeEdit';
+import HomeEditContainer from '../containers/home/HomeEditContainer';
 import HeaderContainer from '../containers/common/HeaderContainer';
 
 const HomeEditPage = () => {
     return (
         <>
             <HeaderContainer />
-            <HomeEdit />
+            <HomeEditContainer />
         </>
     );
 };

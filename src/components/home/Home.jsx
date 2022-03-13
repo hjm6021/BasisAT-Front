@@ -22,7 +22,7 @@ const ErrorMessage = styled.div`
     font-weight: 500;
 `;
 
-const Home = ({ auth, homeInfo, homeInfoError }) => {
+const Home = ({ auth, description, homeInfoError }) => {
     return (
         <HomeInfoBlock>
             {homeInfoError && <ErrorMessage>{homeInfoError.message}</ErrorMessage>}
@@ -33,7 +33,7 @@ const Home = ({ auth, homeInfo, homeInfoError }) => {
                     </Button>
                 ) : null}
             </ButtonBlock>
-            {homeInfo ? <MDEditor.Markdown source={homeInfo.description} /> : null}
+            {description ? <MDEditor.Markdown source={description} /> : null}
         </HomeInfoBlock>
     );
 };

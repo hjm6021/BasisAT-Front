@@ -5,7 +5,8 @@ import { takeLatest } from 'redux-saga/effects';
 import * as homeAPI from '../lib/api/home';
 
 const initialState = {
-    homeInfo: null,
+    id: null,
+    description: '',
     homeInfoError: null,
 };
 
@@ -21,13 +22,15 @@ const home = handleActions(
     {
         [GET_HOME_SUCCESS]: (state, { payload: home }) => {
             return produce(state, (draft) => {
-                draft.homeInfo = home;
+                draft.id = home._id;
+                draft.description = home.description;
                 draft.homeInfoError = null;
             });
         },
         [GET_HOME_FAILURE]: (state, { payload: error }) => {
             return produce(state, (draft) => {
-                draft.homeInfo = null;
+                draft.id = null;
+                draft.description = '';
                 draft.homeInfoError = error;
             });
         },

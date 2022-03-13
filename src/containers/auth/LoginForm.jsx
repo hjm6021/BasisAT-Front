@@ -3,21 +3,20 @@ import { useSelector, useDispatch } from 'react-redux';
 import { changeInput, initializeForm, login } from '../../modules/auth';
 import { useNavigate } from 'react-router-dom';
 import { useState, useEffect } from 'react';
-import { check } from '../../modules/user';
 
 const LoginForm = () => {
     const [error, setError] = useState(null);
 
-    const { username, password, auth, authError, user } = useSelector(({ auth, user }) => ({
+    const { username, password, auth, authError, checkError } = useSelector(({ auth }) => ({
         username: auth.username,
         password: auth.password,
         auth: auth.auth,
         authError: auth.authError,
-        user: user.user,
+        checkError: auth.checkError,
     }));
 
-    const dispatch = useDispatch();
     const navigate = useNavigate();
+    const dispatch = useDispatch();
 
     const onChange = (e) => {
         const { name, value } = e.target;
@@ -52,16 +51,22 @@ const LoginForm = () => {
             return;
         }
 
-        if (auth) {
-            dispatch(check());
-        }
-    }, [auth, authError, dispatch, navigate]);
+        if (checkError) {
+            if (!checkError.response) {
+                setError('Internet Connection Failed');
+                return;
+            }
 
-    useEffect(() => {
-        if (user) {
-            navigate('/home', { replace: true });
+            if (checkError.response.status === 401) {
+                setError(null);
+                return;
+            }
         }
-    }, [user, navigate]);
+
+        if (auth) {
+            navigate('/home');
+        }
+    }, [auth, authError, checkError, navigate]);
 
     return (
         <div>

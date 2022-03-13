@@ -6,8 +6,8 @@ import { getHome } from '../../modules/home';
 
 const HomeContainer = () => {
     const dispatch = useDispatch();
-    const { user, homeInfo, homeInfoError, loading } = useSelector(({ user, home, loading }) => ({
-        user: user.user,
+    const { auth, homeInfo, homeInfoError, loading } = useSelector(({ auth, home, loading }) => ({
+        auth: auth.auth,
         homeInfo: home.homeInfo,
         homeInfoError: home.homeInfoError,
         loading: loading['home/GET_HOME'],
@@ -17,7 +17,7 @@ const HomeContainer = () => {
         dispatch(getHome());
     }, [dispatch]);
 
-    return <>{loading ? <Loading /> : <Home user={user} homeInfo={homeInfo} homeInfoError={homeInfoError} />}</>;
+    return <>{loading ? <Loading /> : <Home auth={auth} homeInfo={homeInfo} homeInfoError={homeInfoError} />}</>;
 };
 
 export default HomeContainer;

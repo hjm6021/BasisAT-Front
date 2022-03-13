@@ -33,7 +33,7 @@ const UserInfo = styled.div`
     margin-right: 1rem;
 `;
 
-const Header = ({ user, onLogout }) => {
+const Header = ({ auth, onLogout }) => {
     return (
         <>
             <HeaderBlock>
@@ -49,7 +49,7 @@ const Header = ({ user, onLogout }) => {
                     </Link>
                     <div className="right">
                         <UserInfo>
-                            {user.username} ({user.isAdmin ? 'ADMIN' : 'USER'})
+                            {auth.username} ({auth.isAdmin ? 'ADMIN' : 'USER'})
                         </UserInfo>
                         <Button onClick={onLogout}>Logout</Button>
                     </div>

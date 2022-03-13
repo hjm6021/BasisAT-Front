@@ -8,7 +8,7 @@ import { composeWithDevTools } from 'redux-devtools-extension';
 import rootReducer, { rootSaga } from './modules';
 import { Provider } from 'react-redux';
 import createSagaMiddleware from 'redux-saga';
-import { check } from './modules/user';
+import { check } from './modules/auth';
 
 const sagaMiddleware = createSagaMiddleware();
 

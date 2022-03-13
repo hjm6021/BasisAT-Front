@@ -5,15 +5,17 @@ import Loading from '../components/common/Loading';
 
 const LoginPage = () => {
     const { loading } = useSelector(({ loading }) => ({
-        loading: loading['auth/LOGIN'],
+        loading: loading['auth/CHECK'],
     }));
-    return loading ? (
-        <Loading />
-    ) : (
+    return (
         <div>
-            <AuthTemplate>
-                <LoginForm />
-            </AuthTemplate>
+            {loading ? (
+                <Loading />
+            ) : (
+                <AuthTemplate>
+                    <LoginForm />
+                </AuthTemplate>
+            )}
         </div>
     );
 };
